@@ -1,6 +1,14 @@
-.button {
+.buttonArea {
   display: flex;
   align-items: flex-end;
   width: 20vw;
-  height: 90vh;
+  height: 100vh;
+  background-color: #62bfff;
+  padding: 30px;
+}
+
+.button {
+  color: #000000 !important;
+  background: #efefee !important;
+  border-color: #efefee !important;
 }

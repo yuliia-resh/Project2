@@ -1,9 +1,11 @@
-import "./App.css";
+import styles from "./App.module.scss";
 import Appointments from "./components/Appointments/Appointments";
+import LogIn from "./components/LogIn/LogIn";
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.contentWrapp}>
+      <LogIn />
       <Appointments />
     </div>
   );

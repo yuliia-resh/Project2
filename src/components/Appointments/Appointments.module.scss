@@ -1,3 +1,19 @@
-.appointWrapp {
+.appointWrap {
+  padding: 20px;
+  p {
+    font-size: 35px;
+  }
+}
+
+.locateSelects {
+  padding: 20px;
+  margin-left: auto;
+  width: 470px;
   display: flex;
+  justify-content: space-around;
+}
+
+.head {
+  display: flex;
+  align-items: center;
 }

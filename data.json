@@ -1,17 +1,4 @@
 {
-  "departments": [
-    { "id": 1, "department": "Anesthetics" },
-    { "id": 2, "department": "Cardiology" },
-    { "id": 3, "department": "Oncology" },
-    { "id": 4, "department": "Orthopedics" },
-    { "id": 5, "department": "Surgery" }
-  ],
-  "statuses": [
-    { "id": 1, "status": "Date confirmed" },
-    { "id": 2, "status": "Active" },
-    { "id": 3, "status": "Accepted" },
-    { "id": 4, "status": "Rejected" }
-  ],
   "appointments": [
     {
       "id": 1,
@@ -39,7 +26,97 @@
       "secondName": "Joys",
       "date": "09/10/2021",
       "time": "13:30",
-      "departmentId": "Orthopedics",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 4,
+      "firstName": "Alex",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 5,
+      "firstName": "Ivan",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 6,
+      "firstName": "Mykola",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 7,
+      "firstName": "Richard",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 8,
+      "firstName": "Andrew",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 9,
+      "firstName": "Lola",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 10,
+      "firstName": "Anna",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 11,
+      "firstName": "Irina",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
+    },
+    {
+      "id": 12,
+      "firstName": "Michael",
+      "secondName": "Joys",
+      "date": "09/10/2021",
+      "time": "13:30",
+      "department": "Orthopedics",
       "status": "Date confirmed",
       "notes": "Lorem ipsum 3"
     }
