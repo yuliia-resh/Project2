@@ -1,13 +1,22 @@
-import { Select } from "antd";
 import { statusesSelect } from "../../constants/select";
+import { Select } from "antd";
+import styles from "./StatusesSelect.module.scss";
 
 const { Option } = Select;
 
 function StatusesSelect() {
   return (
-    <Select defaultValue="Select status" style={{ width: 200 }} bordered={true}>
-      {statusesSelect.map((status) => {
-        return <Option value={status}>{status}</Option>;
+    <Select
+      defaultValue="Select status"
+      className={styles.statuses}
+      bordered={true}
+    >
+      {statusesSelect.map((status, index) => {
+        return (
+          <Option key={index} value={status}>
+            {status}
+          </Option>
+        );
       })}
     </Select>
   );

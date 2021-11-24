@@ -1,0 +1,14 @@
+.contentWrapp {
+  display: flex;
+  height: 100%;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(max-content + 20px);
+  padding: 10px;
+  background-color: #62bfff;
+}

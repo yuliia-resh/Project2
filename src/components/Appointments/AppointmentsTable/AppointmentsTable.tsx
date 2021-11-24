@@ -1,12 +1,18 @@
+import { useHistory } from "react-router-dom";
+
 import { useCustomSelector } from "../../../Redux/Store";
+
 import styles from "./AppointmentsTable.module.scss";
 import { Table } from "antd";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentAppointment } from "../../../Redux/Reducers";
 
-function AppointmentsTable() {
+export default function AppointmentsTable() {
   const { appointments } = useCustomSelector(
     (state) => state.appointmentReducer
   );
+
+  const dispatch = useDispatch();
 
   const columns = [
     {
@@ -32,18 +38,20 @@ function AppointmentsTable() {
     },
   ];
 
-  const handleClick = (e: any) => {
-    console.log(e);
+  const history = useHistory();
+
+  const handleClick = (id: number) => {
+    history.push(`/appointments/${id}`);
   };
 
   return (
     <div className={styles.table}>
       <Table
-        rowClassName={(index) => index && styles.cursor}
         onRow={(record) => {
           return {
             onClick: () => {
-              console.log(record);
+              handleClick(record.id);
+              dispatch(setCurrentAppointment(record));
             },
           };
         }}
@@ -54,5 +62,3 @@ function AppointmentsTable() {
     </div>
   );
 }
-
-export default AppointmentsTable;

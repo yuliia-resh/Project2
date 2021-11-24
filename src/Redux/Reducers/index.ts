@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: any = {
   isAuth: false,
   appointments: [],
-  appointmentWithId: null,
+  currentAppointment: "",
   errorMessage: null,
   isLoading: false,
   currenUser: [],
@@ -30,8 +30,8 @@ const appointmentToolkitSlice = createSlice({
     setAppointmentList(state: any, action: PayloadAction<Array<any>>) {
       state.appointments = action.payload;
     },
-    setAppointmentWithId(state, action) {
-      state.appointmentWithId = action.payload;
+    setCurrentAppointment(state, action) {
+      state.currentAppointment = action.payload;
     },
     setCurrnetUser(state, action) {
       state.currenUser = action.payload;
@@ -45,7 +45,7 @@ export const {
   setAuthentication,
   setAppointmentList,
   setLoading,
-  setAppointmentWithId,
+  setCurrentAppointment,
   setError,
   setIsAuth,
   setCurrnetUser,

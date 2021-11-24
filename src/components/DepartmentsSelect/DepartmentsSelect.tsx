@@ -1,20 +1,24 @@
-import { Select } from "antd";
 import { useState } from "react";
+
 import { departmentsSelect } from "../../constants/select";
+import { Select } from "antd";
+import styles from "./DepartmentSelect.module.scss";
 
 const { Option } = Select;
 
 function DepartmentsSelect() {
-  const [selectedDepartment, setSelectedDepartment] =
-    useState("Select department");
   return (
     <Select
       defaultValue="Select department"
-      style={{ width: 200 }}
-      bordered={true}
+      className={styles.departments}
+      bordered={true} //cannot write just border. It can be only brodered with boolean value
     >
-      {departmentsSelect.map((dep) => {
-        return <Option value={dep}>{dep}</Option>;
+      {departmentsSelect.map((dep, index) => {
+        return (
+          <Option key={index} value={dep}>
+            {dep}
+          </Option>
+        );
       })}
     </Select>
   );

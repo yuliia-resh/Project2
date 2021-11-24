@@ -1,10 +1,11 @@
-import styles from "./LogIn.module.scss";
-import { Button } from "antd";
-import { useCustomSelector } from "../../Redux/Store";
 import { useDispatch } from "react-redux";
+import { useCustomSelector } from "../../Redux/Store";
 import { setIsAuth } from "../../Redux/Reducers";
 
-export default function LogIn() {
+import { Button } from "antd";
+import styles from "./Auth.module.scss";
+
+export default function Auth() {
   const { isAuth } = useCustomSelector((state) => state.appointmentReducer);
 
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ export default function LogIn() {
   return (
     <div className={styles.buttonArea}>
       <Button
-        type="primary"
         shape="round"
         size="large"
         className={styles.button}

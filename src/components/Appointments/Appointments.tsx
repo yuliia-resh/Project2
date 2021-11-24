@@ -1,16 +1,19 @@
-import { Button } from "antd";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { getAppointmentsApi } from "../../api";
-import { setAppointmentList, setError, setLoading } from "../../Redux/Reducers";
 import { useCustomSelector } from "../../Redux/Store";
-import DepartmentsSelect from "../DepartmentsSelect/DepartmentsSelect";
-import StatusesSelect from "../StatusesSelect/StatusesSelect";
-import styles from "./Appointments.module.scss";
-import AppointmentsTable from "./AppointmentsTable/AppointmentsTable";
+import { setAppointmentList, setError, setLoading } from "../../Redux/Reducers";
 
-function Appointments() {
+import { getAppointmentsApi } from "../../api";
+import AppointmentsTable from "./AppointmentsTable";
+import DepartmentsSelect from "../DepartmentsSelect";
+import StatusesSelect from "../StatusesSelect";
+
+import { Button } from "antd";
+import styles from "./Appointments.module.scss";
+import { Trans } from "react-i18next";
+
+export default function Appointments() {
   const { isAuth } = useCustomSelector((state) => state.appointmentReducer);
 
   const dispatch = useDispatch();
@@ -45,11 +48,11 @@ function Appointments() {
           <StatusesSelect />
         </div>
       </div>
+      <p>
+        <Trans>Appointments</Trans>
+      </p>
 
-      <p>Appointments</p>
       <AppointmentsTable />
     </div>
   );
 }
-
-export default Appointments;

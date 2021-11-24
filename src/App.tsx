@@ -1,14 +1,8 @@
-import styles from "./App.module.scss";
-import Appointments from "./components/Appointments/Appointments";
-import LogIn from "./components/LogIn/LogIn";
-
-function App() {
+import Routes from "./Routes";
+export default function App() {
   return (
-    <div className={styles.contentWrapp}>
-      <LogIn />
-      <Appointments />
-    </div>
+    <>
+      <Routes />
+    </>
   );
 }
-
-export default App;

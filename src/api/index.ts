@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:3000"; //I cannot write like process.env.PORT because json-server and my app have different ports
 
 export const getAppointmentsApi = () => {
-  return axios.get(`${BASE_URL}/appointments`);
+  return axios.get("/appointments");
 };
