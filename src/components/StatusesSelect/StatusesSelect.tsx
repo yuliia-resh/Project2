@@ -6,11 +6,7 @@ const { Option } = Select;
 
 function StatusesSelect() {
   return (
-    <Select
-      defaultValue="Select status"
-      className={styles.statuses}
-      bordered={true}
-    >
+    <Select defaultValue="Select status" className={styles.statuses} bordered>
       {statusesSelect.map((status, index) => {
         return (
           <Option key={index} value={status}>

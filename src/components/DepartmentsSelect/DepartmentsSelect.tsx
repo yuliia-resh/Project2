@@ -11,7 +11,7 @@ function DepartmentsSelect() {
     <Select
       defaultValue="Select department"
       className={styles.departments}
-      bordered={true} //cannot write just border. It can be only brodered with boolean value
+      bordered //cannot write just border. It can be only brodered with boolean value
     >
       {departmentsSelect.map((dep, index) => {
         return (

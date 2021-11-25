@@ -11,11 +11,11 @@ import StatusesSelect from "../StatusesSelect";
 
 import { Button } from "antd";
 import styles from "./Appointments.module.scss";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export default function Appointments() {
   const { isAuth } = useCustomSelector((state) => state.appointmentReducer);
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const getAppointments = async () => {
@@ -48,9 +48,7 @@ export default function Appointments() {
           <StatusesSelect />
         </div>
       </div>
-      <p>
-        <Trans>Appointments</Trans>
-      </p>
+      <p>{t("Appointments")}</p>
 
       <AppointmentsTable />
     </div>
