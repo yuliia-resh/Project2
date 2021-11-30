@@ -1,5 +1,4 @@
 .appointWrap {
-  padding: 20px;
   p {
     font-size: 35px;
   }
@@ -11,6 +10,11 @@
   width: 470px;
   display: flex;
   justify-content: space-around;
+  p {
+    font-size: 15px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
 }
 
 .head {

@@ -1,15 +1,26 @@
 import { useHistory } from "react-router-dom";
-
-import { useCustomSelector } from "../../../Redux/Store";
-
-import styles from "./AppointmentsTable.module.scss";
-import { Table } from "antd";
 import { useDispatch } from "react-redux";
+import { useCustomSelector } from "../../../Redux/Store";
 import { setCurrentAppointment } from "../../../Redux/Reducers";
+
+import { AppointmentType } from "../../../types";
+
+import { Table } from "antd";
+import styles from "./AppointmentsTable.module.scss";
 
 export default function AppointmentsTable() {
   const { appointments } = useCustomSelector(
     (state) => state.appointmentReducer
+  );
+
+  const appointmentsForSort = [...appointments];
+  const sortedAppointments = appointmentsForSort.sort(
+    (prevAppointment: AppointmentType, currAppointment: AppointmentType) => {
+      return (
+        new Date(`${currAppointment.date} ${currAppointment.time}`).valueOf() -
+        new Date(`${prevAppointment.date} ${prevAppointment.time}`).valueOf()
+      );
+    }
   );
 
   const dispatch = useDispatch();
@@ -36,18 +47,22 @@ export default function AppointmentsTable() {
       title: "Department",
       dataIndex: "department",
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+    },
   ];
 
   const history = useHistory();
 
   const handleClick = (id: number) => {
-    history.push(`/appointments/${id}`);
+    history.push(`/appointments/:${id}`);
   };
 
   return (
     <div className={styles.table}>
       <Table
-        onRow={(record) => {
+        onRow={(record: AppointmentType) => {
           return {
             onClick: () => {
               handleClick(record.id);
@@ -56,7 +71,7 @@ export default function AppointmentsTable() {
           };
         }}
         columns={columns}
-        dataSource={appointments}
+        dataSource={sortedAppointments}
         rowKey="id"
       />
     </div>

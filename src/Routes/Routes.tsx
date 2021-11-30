@@ -1,10 +1,15 @@
+import { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useCustomSelector } from "../Redux/Store";
+import { setCurrentAppointment } from "../Redux/Reducers";
 
 import Appointments from "../components/Appointments";
 import AppointmentDetails from "../components/Appointments/AppointmentDetails";
+import AppointemntEdit from "../components/Appointments/AppointmentEdit/AppointmentEdit";
 import Auth from "../components/Auth";
 import Languages from "../components/Languages";
-import { useCustomSelector } from "../Redux/Store";
+import PrivateRoute from "../PrivateRoute";
 
 import styles from "./Routes.module.scss";
 
@@ -13,6 +18,11 @@ export default function Routes() {
     (state) => state.appointmentReducer
   );
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (window.location.pathname === "/") dispatch(setCurrentAppointment({}));
+  }, [window.location.pathname]);
+
   return (
     <div className={styles.contentWrapp}>
       <BrowserRouter>
@@ -20,13 +30,25 @@ export default function Routes() {
           <Languages />
           <Auth />
         </div>
-        <Route path="/" exact>
-          <Appointments />
-        </Route>
+        <div className={styles.body}>
+          <Route path="/" exact>
+            <Appointments />
+          </Route>
 
-        <Route path={`/appointments/${currentAppointment.id}`}>
-          <AppointmentDetails />
-        </Route>
+          <PrivateRoute
+            path={`/appointments/:${currentAppointment.id}`}
+            exact={true}
+          >
+            <AppointmentDetails />
+          </PrivateRoute>
+
+          <PrivateRoute
+            path={`/appointments/:${currentAppointment.id}/edit`}
+            exact={true}
+          >
+            <AppointemntEdit />
+          </PrivateRoute>
+        </div>
       </BrowserRouter>
     </div>
   );

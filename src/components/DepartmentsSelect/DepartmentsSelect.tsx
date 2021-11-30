@@ -1,17 +1,21 @@
-import { useState } from "react";
-
 import { departmentsSelect } from "../../constants/select";
+
 import { Select } from "antd";
 import styles from "./DepartmentSelect.module.scss";
 
 const { Option } = Select;
 
-function DepartmentsSelect() {
+type PropsType = {
+  handleChange: (value: string) => void;
+};
+
+function DepartmentsSelect(props: PropsType) {
   return (
     <Select
-      defaultValue="Select department"
+      defaultValue="All"
       className={styles.departments}
-      bordered //cannot write just border. It can be only brodered with boolean value
+      bordered
+      onChange={props.handleChange}
     >
       {departmentsSelect.map((dep, index) => {
         return (

@@ -1,5 +1,5 @@
-import { Button } from "antd";
 import i18n from "../../translator";
+import { Button } from "antd";
 import styles from "./Languages.module.scss";
 
 const changeLanguage = (lng: string) => {

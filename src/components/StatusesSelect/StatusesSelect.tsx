@@ -4,9 +4,14 @@ import styles from "./StatusesSelect.module.scss";
 
 const { Option } = Select;
 
-function StatusesSelect() {
+function StatusesSelect(props: any) {
   return (
-    <Select defaultValue="Select status" className={styles.statuses} bordered>
+    <Select
+      defaultValue={props.currentStatus || "All"}
+      className={styles.statuses}
+      bordered
+      onChange={props.handleChange}
+    >
       {statusesSelect.map((status, index) => {
         return (
           <Option key={index} value={status}>

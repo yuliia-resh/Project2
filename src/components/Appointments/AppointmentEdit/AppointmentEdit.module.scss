@@ -1,0 +1,30 @@
+.title {
+  font-size: 35px;
+}
+
+.editWrapper form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .column {
+    width: 47%;
+  }
+  p {
+    margin-block-end: 0;
+  }
+
+  .input {
+    margin-bottom: 15px;
+    height: 35px;
+    width: 100%;
+  }
+
+  .input[name="notes"] {
+    height: 100px;
+  }
+}
+
+.button {
+  margin-right: 20px;
+}
