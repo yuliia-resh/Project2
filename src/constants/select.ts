@@ -8,6 +8,7 @@ export const departmentsSelect = [
 ];
 export const statusesSelect = [
   "All",
+  "Pending",
   "Date confirmed",
   "Active",
   "Accepted",

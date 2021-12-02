@@ -2,69 +2,83 @@
   "appointments": [
     {
       "id": 1,
-      "firstName": "Keisha",
+      "firstName": "Marta",
       "secondName": "Avalos",
-      "date": "22/11/2021",
-      "time": "11:00",
+      "date": 1636549800000,
       "department": "Cardiology",
-      "status": "Accepted",
+      "number": "(000)-000-0000",
       "notes": "Lorem ipsum 1",
-      "number": "000-000-0000"
-    },
-    {
-      "id": 8,
-      "firstName": "Andrew",
-      "secondName": "Joys",
-      "date": "2021-11-25T14:47:40.585Z",
-      "time": "2021-11-29T10:08:00.249Z",
-      "department": "Surgery",
-      "number": "000-000-0000",
-      "notes": "Lorem ipsum 3",
       "status": "Accepted"
     },
     {
       "id": 9,
       "firstName": "Lola",
       "secondName": "Joys",
-      "date": "09/10/2021",
-      "time": "13:30",
+      "date": 1636457400000,
       "department": "Orthopedics",
       "status": "Date confirmed",
       "notes": "Lorem ipsum 3",
-      "number": "000-000-0000"
+      "number": "(000)-000-0000"
     },
     {
       "id": 10,
       "firstName": "Anna",
       "secondName": "Joys",
-      "date": "09/10/2021",
-      "time": "13:30",
+      "date": 1636457400000,
       "department": "Orthopedics",
-      "status": "Active",
+      "status": "Rejected",
       "notes": "Lorem ipsum 3",
-      "number": "000-000-0000"
+      "number": "(000)-000-0000"
     },
     {
       "id": 11,
       "firstName": "Irina",
-      "secondName": "Joys",
-      "date": "09/10/2021",
-      "time": "13:30",
+      "secondName": "Joyse",
+      "date": 1637575200000,
       "department": "Orthopedics",
-      "status": "Date confirmed",
+      "number": "(000)-000-0000",
       "notes": "Lorem ipsum 3",
-      "number": "000-000-0000"
+      "status": "Date confirmed"
     },
     {
       "id": 12,
       "firstName": "Michael",
       "secondName": "Joys",
-      "date": "09/10/2021",
-      "time": "13:30",
+      "date": 1636457400000,
       "department": "Orthopedics",
       "status": "Date confirmed",
       "notes": "Lorem ipsum 3",
-      "number": "000-000-0000"
+      "number": "(000)-000-0000"
+    },
+    {
+      "firstName": "gkfhgfhf",
+      "secondName": "dsvgsg",
+      "date": 1640002403125,
+      "department": "Cardiology",
+      "number": "(999)-999-9999",
+      "notes": "regerger",
+      "status": "Rejected",
+      "id": 13
+    },
+    {
+      "firstName": "djhbfghjdgsjfh",
+      "secondName": "kjewhfkjwegfjgu",
+      "date": 1640089207275,
+      "department": "Oncology",
+      "number": "(222)-222-2222",
+      "notes": "dsvfsdvgsdeegv",
+      "status": "Pending",
+      "id": 14
+    },
+    {
+      "firstName": "dsvgjnajksbgr",
+      "secondName": "jksdebvkgjsbdgjs",
+      "date": 1640089356865,
+      "department": "Anesthetics",
+      "number": "(444)-444-4444",
+      "notes": "dsgvdfsgdrghderghedrhgde",
+      "status": "Accepted",
+      "id": 15
     }
   ]
 }

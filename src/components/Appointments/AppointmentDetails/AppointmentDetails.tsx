@@ -77,8 +77,8 @@ export default function AppointmentDetails() {
       <Space direction="horizontal">
         <Card title="General information" className={styles.cartInfo}>
           <p>
-            Appointment date: {currentAppointment.date}{" "}
-            {currentAppointment.time}
+            Appointment date:{" "}
+            {new Date(currentAppointment.date).toLocaleString()}
           </p>
           <p>Department: {currentAppointment.department}</p>
           <p>Notes: {currentAppointment.notes}</p>

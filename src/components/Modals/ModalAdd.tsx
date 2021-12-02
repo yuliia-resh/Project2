@@ -1,6 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import AppointmentEdit from "../Appointments/AppointmentEdit";
+import { useDispatch } from "react-redux";
+import { setError, setLoading } from "../../Redux/Reducers";
+
+import { addAppointmentApi } from "../../api";
+import AppointmentForm from "../Appointments/AppointmentForm";
+
 import { Modal } from "antd";
+import { AppointmentType } from "../../types";
 
 type PropsType = {
   setAddModalVisible: Dispatch<SetStateAction<boolean>>;
@@ -8,23 +14,37 @@ type PropsType = {
 };
 
 export default function ModalAdd(props: PropsType) {
-  const handleCancel = () => {
-    props.setAddModalVisible(false);
+  const dispatch = useDispatch();
+
+  const handleAdd = async (values: AppointmentType) => {
+    try {
+      dispatch(setLoading(true));
+      await addAppointmentApi({
+        ...values,
+        date: new Date(values.date).valueOf(),
+        status: "Pending",
+      });
+      alert("Added successfully!");
+    } catch (error: any) {
+      dispatch(setError(error.message));
+      alert("Something went wrong(");
+    } finally {
+      dispatch(setLoading(false));
+      props.setAddModalVisible(false);
+    }
   };
 
-  const handleOk = () => {
-    alert("ok");
-    props.setAddModalVisible(false);
-  };
   return (
     <>
       <Modal
         title="Add appointment"
         visible={props.isAddModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        footer={[]}
       >
-        <AppointmentEdit />
+        <AppointmentForm
+          setModalVisible={props.setAddModalVisible}
+          handleAddSubmit={handleAdd}
+        />
       </Modal>
     </>
   );

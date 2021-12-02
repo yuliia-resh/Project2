@@ -17,10 +17,24 @@ export default function AppointmentsTable() {
   const sortedAppointments = appointmentsForSort.sort(
     (prevAppointment: AppointmentType, currAppointment: AppointmentType) => {
       return (
-        new Date(`${currAppointment.date} ${currAppointment.time}`).valueOf() -
-        new Date(`${prevAppointment.date} ${prevAppointment.time}`).valueOf()
+        (currAppointment.date as number) - (prevAppointment.date as number)
       );
     }
+  );
+  const resultAppointments = sortedAppointments.map(
+    (appointment: AppointmentType) => {
+      return {
+        ...appointment,
+        date: new Date(appointment.date).toLocaleString("RU-ru", {
+          day: "numeric",
+          month: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        }),
+      };
+    },
+    []
   );
 
   const dispatch = useDispatch();
@@ -40,10 +54,6 @@ export default function AppointmentsTable() {
       dataIndex: "date",
     },
     {
-      title: "Time",
-      dataIndex: "time",
-    },
-    {
       title: "Department",
       dataIndex: "department",
     },
@@ -55,8 +65,15 @@ export default function AppointmentsTable() {
 
   const history = useHistory();
 
-  const handleClick = (id: number) => {
-    history.push(`/appointments/:${id}`);
+  const handleClick = (record: AppointmentType) => {
+    history.push(`/appointments/:${record.id}`);
+
+    const currentAppointment = appointments.find(
+      (appointment: AppointmentType) => {
+        return appointment.id === record.id;
+      }
+    );
+    dispatch(setCurrentAppointment(currentAppointment));
   };
 
   return (
@@ -65,13 +82,12 @@ export default function AppointmentsTable() {
         onRow={(record: AppointmentType) => {
           return {
             onClick: () => {
-              handleClick(record.id);
-              dispatch(setCurrentAppointment(record));
+              handleClick(record);
             },
           };
         }}
         columns={columns}
-        dataSource={sortedAppointments}
+        dataSource={resultAppointments}
         rowKey="id"
       />
     </div>

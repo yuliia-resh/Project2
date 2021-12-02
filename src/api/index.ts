@@ -18,3 +18,7 @@ export const changeStatusApi = (appointment: AppointmentType) => {
 export const updateAppointmentApi = (appointment: AppointmentType) => {
   return axios.put(`appointments/${appointment.id}`, appointment);
 };
+
+export const addAppointmentApi = (appointment: AppointmentType) => {
+  return axios.post(`appointments`, appointment);
+};

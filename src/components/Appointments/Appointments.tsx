@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
+import { useCustomSelector } from "../../Redux/Store";
 import { setAppointmentList, setError, setLoading } from "../../Redux/Reducers";
 
 import { useTranslation } from "react-i18next";
 import { getAppointmentsApi } from "../../api";
 import { AppointmentType } from "../../types";
+
 import AppointmentsTable from "./AppointmentsTable";
 import DepartmentsSelect from "../DepartmentsSelect";
 import ModalAdd from "../Modals/ModalAdd";
@@ -21,6 +22,10 @@ type SelectedFiltersType = {
 };
 
 export default function Appointments() {
+  const { appointments } = useCustomSelector(
+    (state) => state.appointmentReducer
+  );
+
   const [selectedFilters, setSelectedFilters] = useState<SelectedFiltersType>({
     department: "All",
     status: "All",
@@ -97,7 +102,7 @@ export default function Appointments() {
 
   useEffect(() => {
     getAppointments();
-  }, [selectedFilters]);
+  }, [selectedFilters, appointments]);
 
   return (
     <div className={styles.appointWrap}>

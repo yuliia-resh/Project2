@@ -6,7 +6,7 @@ import { setCurrentAppointment } from "../Redux/Reducers";
 
 import Appointments from "../components/Appointments";
 import AppointmentDetails from "../components/Appointments/AppointmentDetails";
-import AppointemntEdit from "../components/Appointments/AppointmentEdit/AppointmentEdit";
+import AppointemntForm from "../components/Appointments/AppointmentForm";
 import Auth from "../components/Auth";
 import Languages from "../components/Languages";
 import PrivateRoute from "../PrivateRoute";
@@ -46,7 +46,7 @@ export default function Routes() {
             path={`/appointments/:${currentAppointment.id}/edit`}
             exact={true}
           >
-            <AppointemntEdit />
+            <AppointemntForm />
           </PrivateRoute>
         </div>
       </BrowserRouter>

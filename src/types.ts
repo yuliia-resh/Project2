@@ -11,8 +11,7 @@ export type AppointmentType = {
   id: number;
   firstName: string;
   secondName: string;
-  date: string;
-  time: string;
+  date: number | string;
   department: string;
   status: string;
   notes: string;
