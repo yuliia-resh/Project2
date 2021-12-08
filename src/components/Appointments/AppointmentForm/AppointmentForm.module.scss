@@ -34,3 +34,25 @@
   margin-block-start: -15px;
   padding-bottom: 15px;
 }
+
+.phoneNumber {
+  margin-bottom: 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  padding: 4px 11px;
+  transition: all 0.3s, height 0s;
+}
+
+.phoneNumber:focus {
+  border: 1px solid #1890ff !important;
+  box-shadow: 0 0 0 1.5px #7abdf363;
+  border-right-width: 1px !important;
+  outline: 0;
+  transition: all 0.3s, height 0s;
+}
+
+.phoneNumber::selection {
+  color: #fff;
+  background: #188fff;
+  border: 1px solid #1890ff !important;
+}

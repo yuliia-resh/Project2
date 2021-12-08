@@ -1,10 +1,10 @@
 export type StateType = {
-  isAuth: boolean;
   appointments: AppointmentType[];
-  currentAppointment: AppointmentType;
   errorMessage: null | string;
+  authToken: undefined | string;
+  departments: string[];
   isLoading: boolean;
-  currentUser: [];
+  statuses: string[];
 };
 
 export type AppointmentType = {

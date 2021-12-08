@@ -1,13 +1,13 @@
 {
   "appointments": [
     {
-      "id": 1,
       "firstName": "Marta",
       "secondName": "Avalos",
       "date": 1636549800000,
       "department": "Cardiology",
-      "number": "(000)-000-0000",
+      "number": "0000000000",
       "notes": "Lorem ipsum 1",
+      "id": 1,
       "status": "Accepted"
     },
     {
@@ -18,7 +18,7 @@
       "department": "Orthopedics",
       "status": "Date confirmed",
       "notes": "Lorem ipsum 3",
-      "number": "(000)-000-0000"
+      "number": "0000000000"
     },
     {
       "id": 10,
@@ -28,17 +28,17 @@
       "department": "Orthopedics",
       "status": "Rejected",
       "notes": "Lorem ipsum 3",
-      "number": "(000)-000-0000"
+      "number": "0000000000"
     },
     {
       "id": 11,
       "firstName": "Irina",
       "secondName": "Joyse",
       "date": 1637575200000,
+      "number": "0000000000",
       "department": "Orthopedics",
-      "number": "(000)-000-0000",
-      "notes": "Lorem ipsum 3",
-      "status": "Date confirmed"
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 3"
     },
     {
       "id": 12,
@@ -48,37 +48,73 @@
       "department": "Orthopedics",
       "status": "Date confirmed",
       "notes": "Lorem ipsum 3",
-      "number": "(000)-000-0000"
+      "number": "0000000000"
     },
     {
-      "firstName": "gkfhgfhf",
+      "id": 13,
+      "firstName": "Nina",
       "secondName": "dsvgsg",
-      "date": 1640002403125,
-      "department": "Cardiology",
-      "number": "(999)-999-9999",
-      "notes": "regerger",
-      "status": "Rejected",
-      "id": 13
+      "date": 1640952803125,
+      "number": "9999999999",
+      "department": "Oncology",
+      "status": "Active",
+      "notes": "regerger"
     },
     {
       "firstName": "djhbfghjdgsjfh",
       "secondName": "kjewhfkjwegfjgu",
       "date": 1640089207275,
       "department": "Oncology",
-      "number": "(222)-222-2222",
+      "number": "2222222222",
       "notes": "dsvfsdvgsdeegv",
-      "status": "Pending",
-      "id": 14
+      "id": 14,
+      "status": "Rejected"
     },
     {
-      "firstName": "dsvgjnajksbgr",
-      "secondName": "jksdebvkgjsbdgjs",
-      "date": 1640089356865,
-      "department": "Anesthetics",
-      "number": "(444)-444-4444",
-      "notes": "dsgvdfsgdrghderghedrhgde",
-      "status": "Accepted",
-      "id": 15
+      "firstName": "Vania",
+      "secondName": "Ivanov",
+      "date": 1640351964333,
+      "department": "Orthopedics",
+      "number": "7272623561",
+      "notes": "11545",
+      "status": "Pending",
+      "id": 16
+    },
+    {
+      "id": 17,
+      "firstName": "gfhgjfhkgjhlk",
+      "secondName": "jgfghfcdhj",
+      "date": 1640102171387,
+      "number": "9999999997",
+      "department": "Surgery",
+      "status": "Pending",
+      "notes": "frbgergerg"
+    },
+    {
+      "firstName": "Masha",
+      "secondName": "efwefwef",
+      "date": 1639484524661,
+      "department": "Surgery",
+      "number": "6326723732",
+      "notes": "sdvjbsdlkjvblksdbv",
+      "status": "Pending",
+      "id": 18
     }
+  ],
+  "departments": [
+    "All",
+    "Anesthetics",
+    "Cardiology",
+    "Oncology",
+    "Orthopedics",
+    "Surgery"
+  ],
+  "statuses": [
+    "All",
+    "Pending",
+    "Date confirmed",
+    "Active",
+    "Accepted",
+    "Rejected"
   ]
 }

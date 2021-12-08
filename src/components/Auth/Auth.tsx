@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../Redux/Store";
-import { setError } from "../../Redux/Reducers";
-import { Authenthication } from "../../Redux/Reducers";
+import { useCustomSelector } from "../../redux/store";
+import { setError } from "../../redux/reducers/AppointmentSlice";
 
 import { Button } from "antd";
 import styles from "./Auth.module.scss";
@@ -14,13 +12,13 @@ declare global {
 }
 
 export default function Auth() {
-  const { isAuth } = useCustomSelector((state) => state.appointmentReducer);
+  const { authToken } = useCustomSelector((state) => state.appointmentReducer);
 
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const onAuthClick = () => {
     try {
-      isAuth
+      authToken
         ? window.gapi.auth2.getAuthInstance().signOut()
         : window.gapi.auth2.getAuthInstance().signIn();
     } catch (error: any) {
@@ -29,19 +27,15 @@ export default function Auth() {
     }
   };
 
-  useEffect(() => {
-    dispatch(Authenthication(dispatch));
-  }, []);
-
   return (
     <div className={styles.buttonArea}>
       <Button
         shape="round"
         size="large"
         className={styles.button}
-        onClick={handleClick}
+        onClick={onAuthClick}
       >
-        {isAuth ? "Log out" : "Log in"}
+        {authToken ? "Log out" : "Log in"}
       </Button>
     </div>
   );

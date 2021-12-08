@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import appointmentToolkitSlice from "../Reducers";
+import appointmentSlice from "../reducers/AppointmentSlice";
 
 const rootReducer = combineReducers({
-  appointmentReducer: appointmentToolkitSlice,
+  appointmentReducer: appointmentSlice,
 });
 
 export const store = configureStore({

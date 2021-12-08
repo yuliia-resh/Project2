@@ -1,14 +1,21 @@
-import { Route, useHistory } from "react-router-dom";
-import { useCustomSelector } from "./Redux/Store";
+import { Route, Redirect } from "react-router-dom";
+import { useCustomSelector } from "./redux/store";
 
-export default function PrivateRoute(props: any) {
-  const { isAuth } = useCustomSelector((state) => state.appointmentReducer);
+type PropsType = {
+  path: string;
+  exact: boolean;
+  children: any;
+};
+
+export default function PrivateRoute(props: PropsType) {
+  const { authToken } = useCustomSelector((state) => state.appointmentReducer);
   const { children } = props;
 
-  const history = useHistory();
+  if (!authToken) return <Redirect to="/" />;
+
   return (
     <Route path={props.path} exact={props.exact}>
-      {isAuth ? { ...children } : history.replace("/")}
+      {children}
     </Route>
   );
 }

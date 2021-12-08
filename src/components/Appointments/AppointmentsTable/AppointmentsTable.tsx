@@ -1,7 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../../Redux/Store";
-import { setCurrentAppointment } from "../../../Redux/Reducers";
+import { useCustomSelector } from "../../../redux/store";
 
 import { AppointmentType } from "../../../types";
 
@@ -13,6 +11,8 @@ export default function AppointmentsTable() {
     (state) => state.appointmentReducer
   );
 
+  const history = useHistory();
+
   const appointmentsForSort = [...appointments];
   const sortedAppointments = appointmentsForSort.sort(
     (prevAppointment: AppointmentType, currAppointment: AppointmentType) => {
@@ -21,6 +21,7 @@ export default function AppointmentsTable() {
       );
     }
   );
+
   const resultAppointments = sortedAppointments.map(
     (appointment: AppointmentType) => {
       return {
@@ -37,13 +38,11 @@ export default function AppointmentsTable() {
     []
   );
 
-  const dispatch = useDispatch();
-
   const columns = [
     {
       title: "First name",
       dataIndex: "firstName",
-      render: (text: string) => <a>{text}</a>,
+      render: (text: string) => <p className={styles.firstName}>{text}</p>,
     },
     {
       title: "Second name",
@@ -63,33 +62,26 @@ export default function AppointmentsTable() {
     },
   ];
 
-  const history = useHistory();
-
-  const handleClick = (record: AppointmentType) => {
-    history.push(`/appointments/:${record.id}`);
-
-    const currentAppointment = appointments.find(
-      (appointment: AppointmentType) => {
-        return appointment.id === record.id;
-      }
-    );
-    dispatch(setCurrentAppointment(currentAppointment));
+  const handleRowClick = (recordId: number) => {
+    history.push(`/appointments/${recordId}`);
   };
 
   return (
-    <div className={styles.table}>
-      <Table
-        onRow={(record: AppointmentType) => {
-          return {
-            onClick: () => {
-              handleClick(record);
-            },
-          };
-        }}
-        columns={columns}
-        dataSource={resultAppointments}
-        rowKey="id"
-      />
-    </div>
+    <>
+      <div className={styles.table}>
+        <Table
+          onRow={(record: AppointmentType) => {
+            return {
+              onClick: () => {
+                handleRowClick(record.id);
+              },
+            };
+          }}
+          columns={columns}
+          dataSource={resultAppointments}
+          rowKey="id"
+        />
+      </div>
+    </>
   );
 }

@@ -1,9 +1,8 @@
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { setError, setLoading } from "../../Redux/Reducers";
-import { useCustomSelector } from "../../Redux/Store";
+import { setError } from "../../redux/reducers/AppointmentSlice";
 
-import { deleteAppointmentById } from "../../api";
+import { deleteAppointmentByIdApi } from "../../api";
 
 import { Modal } from "antd";
 import { Dispatch, SetStateAction } from "react";
@@ -14,24 +13,19 @@ type PropsType = {
 };
 
 export default function ModalDelete(props: PropsType) {
-  const { currentAppointment } = useCustomSelector(
-    (state) => state.appointmentReducer
-  );
-
   const dispatch = useDispatch();
   const history = useHistory();
+  const params = useParams<{ id: string }>();
 
   const handleOk = async () => {
     try {
-      dispatch(setLoading(true));
-      await deleteAppointmentById(currentAppointment.id);
+      await deleteAppointmentByIdApi(+params.id);
       alert("Deleted successfully!");
       history.push("/");
     } catch (error: any) {
       dispatch(setError(error.message));
       alert("Appointment didn't deleted! Something went wrong, sory(");
     } finally {
-      dispatch(setLoading(false));
       props.setModalVisible(false);
     }
   };

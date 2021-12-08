@@ -1,4 +1,12 @@
-import { departmentsSelect } from "../../constants/select";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useCustomSelector } from "../../redux/store";
+import {
+  setDepartments,
+  setError,
+} from "../../redux/reducers/AppointmentSlice";
+
+import { getDepartmentsApi } from "../../api";
 
 import { Select } from "antd";
 import styles from "./DepartmentSelect.module.scss";
@@ -10,6 +18,25 @@ type PropsType = {
 };
 
 function DepartmentsSelect(props: PropsType) {
+  const { departments } = useCustomSelector(
+    (state) => state.appointmentReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getDepartments = async () => {
+      try {
+        const { data } = await getDepartmentsApi();
+        dispatch(setDepartments(data));
+      } catch (error: any) {
+        dispatch(setError(error.message));
+      }
+    };
+
+    getDepartments();
+  }, [dispatch]);
+
   return (
     <Select
       defaultValue="All"
@@ -17,7 +44,7 @@ function DepartmentsSelect(props: PropsType) {
       bordered
       onChange={props.handleChange}
     >
-      {departmentsSelect.map((dep, index) => {
+      {departments.map((dep, index) => {
         return (
           <Option key={index} value={dep}>
             {dep}

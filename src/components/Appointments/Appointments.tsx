@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../Redux/Store";
-import { setAppointmentList, setError, setLoading } from "../../Redux/Reducers";
+import {
+  setAppointmentList,
+  setError,
+} from "../../redux/reducers/AppointmentSlice";
 
 import { useTranslation } from "react-i18next";
 import { getAppointmentsApi } from "../../api";
 import { AppointmentType } from "../../types";
 
+import Accessor from "../../Accessor";
 import AppointmentsTable from "./AppointmentsTable";
 import DepartmentsSelect from "../DepartmentsSelect";
 import ModalAdd from "../Modals/ModalAdd";
 import StatusesSelect from "../StatusesSelect";
-import Accessor from "../Accessor";
 
 import { Button } from "antd";
 import styles from "./Appointments.module.scss";
@@ -22,10 +24,6 @@ type SelectedFiltersType = {
 };
 
 export default function Appointments() {
-  const { appointments } = useCustomSelector(
-    (state) => state.appointmentReducer
-  );
-
   const [selectedFilters, setSelectedFilters] = useState<SelectedFiltersType>({
     department: "All",
     status: "All",
@@ -36,7 +34,6 @@ export default function Appointments() {
   const dispatch = useDispatch();
 
   const getAppointments = async () => {
-    dispatch(setLoading(true));
     try {
       const { data } = await getAppointmentsApi();
       if (
@@ -83,8 +80,6 @@ export default function Appointments() {
       }
     } catch (error: any) {
       dispatch(setError(error.message));
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
@@ -102,40 +97,45 @@ export default function Appointments() {
 
   useEffect(() => {
     getAppointments();
-  }, [selectedFilters, appointments]);
+  }, [selectedFilters]);
 
   return (
-    <div className={styles.appointWrap}>
-      <div className={styles.head}>
-        <Accessor>
-          <Button
-            type="primary"
-            shape="circle"
-            size="large"
-            onClick={showAddModal}
-          >
-            +
-          </Button>
-        </Accessor>
+    <>
+      <div className={styles.appointWrap}>
+        <div className={styles.head}>
+          <Accessor>
+            <Button
+              type="primary"
+              shape="circle"
+              size="large"
+              onClick={showAddModal}
+            >
+              +
+            </Button>
+          </Accessor>
 
-        <div className={styles.locateSelects}>
-          <div>
-            <p>Select department</p>
-            <DepartmentsSelect handleChange={handleSelectDepartment} />
-          </div>
-          <div>
-            <p>Select status</p>
-            <StatusesSelect handleChange={handleSelectStatus} />
+          <div className={styles.locateSelects}>
+            <div>
+              <p>Select department</p>
+              <DepartmentsSelect handleChange={handleSelectDepartment} />
+            </div>
+            <div>
+              <p>Select status</p>
+              <StatusesSelect
+                currentStatus="All"
+                handleChange={handleSelectStatus}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <p>{t("Appointments")}</p>
+        <p>{t("Appointments")}</p>
 
-      <AppointmentsTable />
-      <ModalAdd
-        isAddModalVisible={isAddModalVisible}
-        setAddModalVisible={setAddModalVisible}
-      />
-    </div>
+        <AppointmentsTable />
+        <ModalAdd
+          isAddModalVisible={isAddModalVisible}
+          setAddModalVisible={setAddModalVisible}
+        />
+      </div>
+    </>
   );
 }
