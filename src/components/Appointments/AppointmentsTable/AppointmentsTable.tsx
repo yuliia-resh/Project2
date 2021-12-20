@@ -1,15 +1,19 @@
+import { useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { useCustomSelector } from "../../../redux/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 import { AppointmentType } from "../../../types";
 
 import { Table } from "antd";
 import styles from "./AppointmentsTable.module.scss";
+import dayjs from "dayjs";
 
 export default function AppointmentsTable() {
-  const { appointments } = useCustomSelector(
-    (state) => state.appointmentReducer
-  );
+  const appointmentsSelector = (state: RootState) => {
+    return state.appointmentReducer.appointments;
+  };
+  const appointments = useSelector(appointmentsSelector);
 
   const history = useHistory();
 
@@ -22,21 +26,14 @@ export default function AppointmentsTable() {
     }
   );
 
-  const resultAppointments = sortedAppointments.map(
-    (appointment: AppointmentType) => {
+  const resultAppointments = useMemo(() => {
+    return sortedAppointments.map((appointment: AppointmentType) => {
       return {
         ...appointment,
-        date: new Date(appointment.date).toLocaleString("RU-ru", {
-          day: "numeric",
-          month: "numeric",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        }),
+        date: dayjs(appointment.date).format("DD.MM.YYYY HH:MM"),
       };
-    },
-    []
-  );
+    }, []);
+  }, [sortedAppointments]);
 
   const columns = [
     {
@@ -62,26 +59,27 @@ export default function AppointmentsTable() {
     },
   ];
 
-  const handleRowClick = (recordId: number) => {
-    history.push(`/appointments/${recordId}`);
-  };
+  const handleRowClick = useCallback(
+    (recordId: number) => {
+      history.push(`/appointments/${recordId}`);
+    },
+    [history]
+  );
 
   return (
-    <>
-      <div className={styles.table}>
-        <Table
-          onRow={(record: AppointmentType) => {
-            return {
-              onClick: () => {
-                handleRowClick(record.id);
-              },
-            };
-          }}
-          columns={columns}
-          dataSource={resultAppointments}
-          rowKey="id"
-        />
-      </div>
-    </>
+    <div className={styles.table}>
+      <Table
+        onRow={(record: AppointmentType) => {
+          return {
+            onClick: () => {
+              handleRowClick(record.id);
+            },
+          };
+        }}
+        columns={columns}
+        dataSource={resultAppointments}
+        rowKey="id"
+      />
+    </div>
   );
 }

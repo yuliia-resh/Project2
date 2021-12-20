@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import { setError } from "../../redux/reducers/AppointmentSlice";
 
 import { Button } from "antd";
@@ -12,7 +12,10 @@ declare global {
 }
 
 export default function Auth() {
-  const { authToken } = useCustomSelector((state) => state.appointmentReducer);
+  const authTokenSelector = (state: RootState) => {
+    return state.appointmentReducer.authToken;
+  };
+  const authToken = useSelector(authTokenSelector);
 
   const dispatch = useDispatch();
 

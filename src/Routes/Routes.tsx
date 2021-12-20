@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Appointments from "../components/Appointments";
-import AppointmentDetails from "../components/Appointments/AppointmentDetails";
+import AppointmentsPage from "../components/Appointments";
+import AppointmentDetailsPage from "../components/Appointments/AppointmentDetails";
 import AppointemntForm from "../components/Appointments/AppointmentForm";
 import Auth from "../components/Auth";
 import Languages from "../components/Languages";
@@ -20,15 +20,15 @@ export default function Routes() {
         <div className={styles.body}>
           <Switch>
             <Route path="/" exact>
-              <Appointments />
+              <AppointmentsPage />
             </Route>
 
-            <PrivateRoute path={`/appointments/:id/edit`} exact={true}>
+            <PrivateRoute path={`/appointments/:id/edit`} exact>
               <AppointemntForm setModalVisible={() => {}} />
             </PrivateRoute>
 
-            <PrivateRoute path={`/appointments/:id`} exact={true}>
-              <AppointmentDetails />
+            <PrivateRoute path={`/appointments/:id`} exact>
+              <AppointmentDetailsPage />
             </PrivateRoute>
           </Switch>
         </div>

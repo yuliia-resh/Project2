@@ -1,39 +1,38 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Authenthication, setError } from "./redux/reducers/AppointmentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { authenthication, setError } from "./redux/reducers/AppointmentSlice";
 
 import Loading from "./components/Loading";
 import Routes from "./routes";
-import { useCustomSelector } from "./redux/store";
+import { RootState } from "./redux/store";
 
 export default function App() {
-  const { isLoading, authToken } = useCustomSelector(
-    (state) => state.appointmentReducer
-  );
+  const authTokenSelector = (state: RootState) => {
+    return state.appointmentReducer.authToken;
+  };
+  const authToken = useSelector(authTokenSelector);
 
   const [isLocalLoading, setLocalLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const Auth = () => {
+    const auth = () => {
       setLocalLoading(true);
       try {
-        dispatch(Authenthication(dispatch));
+        dispatch(authenthication(dispatch));
       } catch (error: any) {
         dispatch(setError(error.message));
       } finally {
         setLocalLoading(false);
       }
     };
-    Auth();
+    auth();
   }, [dispatch]);
 
   return (
     <>
-      {isLocalLoading && isLoading && !authToken && <Loading />}
-      {!isLocalLoading && !isLoading && (authToken || authToken === "") && (
-        <Routes />
-      )}
+      {isLocalLoading && !authToken && <Loading />}
+      {!isLocalLoading && (authToken || authToken === "") && <Routes />}
     </>
   );
 }

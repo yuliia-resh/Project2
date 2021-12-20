@@ -1,8 +1,6 @@
 import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { setError } from "../../redux/reducers/AppointmentSlice";
-
-import { deleteAppointmentByIdApi } from "../../api";
+import { deleteAppointmentById } from "../../redux/reducers/AppointmentSlice";
 
 import { Modal } from "antd";
 import { Dispatch, SetStateAction } from "react";
@@ -19,11 +17,10 @@ export default function ModalDelete(props: PropsType) {
 
   const handleOk = async () => {
     try {
-      await deleteAppointmentByIdApi(+params.id);
+      await dispatch(deleteAppointmentById(+params.id));
       alert("Deleted successfully!");
       history.push("/");
-    } catch (error: any) {
-      dispatch(setError(error.message));
+    } catch {
       alert("Appointment didn't deleted! Something went wrong, sory(");
     } finally {
       props.setModalVisible(false);

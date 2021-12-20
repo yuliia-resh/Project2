@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setAppointmentList,
-  setError,
-} from "../../redux/reducers/AppointmentSlice";
+import { getAppointments } from "../../redux/reducers/AppointmentSlice";
 
 import { useTranslation } from "react-i18next";
-import { getAppointmentsApi } from "../../api";
-import { AppointmentType } from "../../types";
 
 import Accessor from "../../Accessor";
 import AppointmentsTable from "./AppointmentsTable";
 import DepartmentsSelect from "../DepartmentsSelect";
-import ModalAdd from "../Modals/ModalAdd";
+import ModalAdd from "../Modals/NewAppointmentModal";
 import StatusesSelect from "../StatusesSelect";
 
 import { Button } from "antd";
@@ -23,7 +18,7 @@ type SelectedFiltersType = {
   status: string;
 };
 
-export default function Appointments() {
+export default function AppointmentsPage() {
   const [selectedFilters, setSelectedFilters] = useState<SelectedFiltersType>({
     department: "All",
     status: "All",
@@ -33,55 +28,17 @@ export default function Appointments() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const getAppointments = async () => {
-    try {
-      const { data } = await getAppointmentsApi();
-      if (
-        selectedFilters.department === "All" &&
-        selectedFilters.status === "All"
-      ) {
-        dispatch(setAppointmentList(data));
-      } else if (
-        selectedFilters.department !== "All" &&
-        selectedFilters.status === "All"
-      ) {
-        dispatch(
-          setAppointmentList(
-            data.filter((item: AppointmentType) => {
-              return item.department === selectedFilters.department;
-            })
-          )
-        );
-      } else if (
-        selectedFilters.department === "All" &&
-        selectedFilters.status !== "All"
-      ) {
-        dispatch(
-          setAppointmentList(
-            data.filter((item: AppointmentType) => {
-              return item.status === selectedFilters.status;
-            })
-          )
-        );
-      } else if (
-        selectedFilters.department !== "All" &&
-        selectedFilters.status !== "All"
-      ) {
-        dispatch(
-          setAppointmentList(
-            data.filter((item: AppointmentType) => {
-              return (
-                item.department === selectedFilters.department &&
-                item.status === selectedFilters.status
-              );
-            })
-          )
-        );
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await dispatch(getAppointments(selectedFilters));
+      } catch {
+        alert("Something went wrong(");
       }
-    } catch (error: any) {
-      dispatch(setError(error.message));
-    }
-  };
+    };
+
+    getData();
+  }, [selectedFilters, dispatch]);
 
   const handleSelectDepartment = (value: string) => {
     setSelectedFilters({ ...selectedFilters, department: value });
@@ -95,15 +52,11 @@ export default function Appointments() {
     setAddModalVisible(true);
   };
 
-  useEffect(() => {
-    getAppointments();
-  }, [selectedFilters]);
-
   return (
     <>
       <div className={styles.appointWrap}>
         <div className={styles.head}>
-          <Accessor>
+          <Accessor authOnly>
             <Button
               type="primary"
               shape="circle"
@@ -131,11 +84,11 @@ export default function Appointments() {
         <p>{t("Appointments")}</p>
 
         <AppointmentsTable />
-        <ModalAdd
-          isAddModalVisible={isAddModalVisible}
-          setAddModalVisible={setAddModalVisible}
-        />
       </div>
+      <ModalAdd
+        isAddModalVisible={isAddModalVisible}
+        setAddModalVisible={setAddModalVisible}
+      />
     </>
   );
 }

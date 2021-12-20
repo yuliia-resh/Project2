@@ -1,14 +1,14 @@
 {
   "appointments": [
     {
+      "id": 1,
       "firstName": "Marta",
       "secondName": "Avalos",
       "date": 1636549800000,
-      "department": "Cardiology",
-      "number": "0000000000",
-      "notes": "Lorem ipsum 1",
-      "id": 1,
-      "status": "Accepted"
+      "number": "0065785785",
+      "department": "Orthopedics",
+      "status": "Date confirmed",
+      "notes": "Lorem ipsum 1"
     },
     {
       "id": 9,
@@ -37,7 +37,7 @@
       "date": 1637575200000,
       "number": "0000000000",
       "department": "Orthopedics",
-      "status": "Date confirmed",
+      "status": "Accepted",
       "notes": "Lorem ipsum 3"
     },
     {
@@ -61,16 +61,6 @@
       "notes": "regerger"
     },
     {
-      "firstName": "djhbfghjdgsjfh",
-      "secondName": "kjewhfkjwegfjgu",
-      "date": 1640089207275,
-      "department": "Oncology",
-      "number": "2222222222",
-      "notes": "dsvfsdvgsdeegv",
-      "id": 14,
-      "status": "Rejected"
-    },
-    {
       "firstName": "Vania",
       "secondName": "Ivanov",
       "date": 1640351964333,
@@ -81,16 +71,6 @@
       "id": 16
     },
     {
-      "id": 17,
-      "firstName": "gfhgjfhkgjhlk",
-      "secondName": "jgfghfcdhj",
-      "date": 1640102171387,
-      "number": "9999999997",
-      "department": "Surgery",
-      "status": "Pending",
-      "notes": "frbgergerg"
-    },
-    {
       "firstName": "Masha",
       "secondName": "efwefwef",
       "date": 1639484524661,
@@ -99,6 +79,36 @@
       "notes": "sdvjbsdlkjvblksdbv",
       "status": "Pending",
       "id": 18
+    },
+    {
+      "id": 20,
+      "firstName": "Nastia",
+      "secondName": "gg",
+      "date": 1640969611215,
+      "number": "4553345453",
+      "department": "Oncology",
+      "status": "Date confirmed",
+      "notes": "g"
+    },
+    {
+      "firstName": "Anna",
+      "secondName": "lhdshlifs",
+      "date": 1640946140269,
+      "department": "Anesthetics",
+      "number": "2161781987",
+      "notes": "dfcjksdhfkjsdhfj",
+      "status": "Accepted",
+      "id": 21
+    },
+    {
+      "firstName": "jhvjhv",
+      "secondName": "jbnb",
+      "date": 1638888954690,
+      "department": "Cardiology",
+      "number": "8787700790",
+      "notes": "jj",
+      "status": "Pending",
+      "id": 22
     }
   ],
   "departments": [

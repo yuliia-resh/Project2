@@ -1,15 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../redux/store";
-import {
-  setDepartments,
-  setError,
-} from "../../redux/reducers/AppointmentSlice";
-
-import { getDepartmentsApi } from "../../api";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { getDepartments } from "../../redux/reducers/AppointmentSlice";
 
 import { Select } from "antd";
 import styles from "./DepartmentSelect.module.scss";
+import Loading from "../Loading";
 
 const { Option } = Select;
 
@@ -17,42 +13,49 @@ type PropsType = {
   handleChange: (value: string) => void;
 };
 
-function DepartmentsSelect(props: PropsType) {
-  const { departments } = useCustomSelector(
-    (state) => state.appointmentReducer
-  );
+export default function DepartmentsSelect(props: PropsType) {
+  const [isLoading, setLoading] = useState(false);
+
+  const departmentsSelector = (state: RootState) => {
+    return state.appointmentReducer.departments;
+  };
+  const departments = useSelector(departmentsSelector);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getDepartments = async () => {
-      try {
-        const { data } = await getDepartmentsApi();
-        dispatch(setDepartments(data));
-      } catch (error: any) {
-        dispatch(setError(error.message));
-      }
+    const getData = async () => {
+      setLoading(true);
+      await dispatch(getDepartments());
+      setLoading(false);
     };
 
-    getDepartments();
+    getData();
   }, [dispatch]);
 
+  enum DepartmentsSelectEnum {
+    All = "All",
+  }
+
   return (
-    <Select
-      defaultValue="All"
-      className={styles.departments}
-      bordered
-      onChange={props.handleChange}
-    >
-      {departments.map((dep, index) => {
-        return (
-          <Option key={index} value={dep}>
-            {dep}
-          </Option>
-        );
-      })}
-    </Select>
+    <>
+      {isLoading && <Loading />}
+      {!isLoading && (
+        <Select
+          defaultValue={DepartmentsSelectEnum.All}
+          className={styles.departments}
+          bordered
+          onChange={props.handleChange}
+        >
+          {departments.map((dep, index) => {
+            return (
+              <Option key={index} value={dep}>
+                {dep}
+              </Option>
+            );
+          })}
+        </Select>
+      )}
+    </>
   );
 }
-
-export default DepartmentsSelect;

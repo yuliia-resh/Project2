@@ -1,5 +1,6 @@
+import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { useCustomSelector } from "./redux/store";
+import { RootState } from "./redux/store";
 
 type PropsType = {
   path: string;
@@ -8,7 +9,11 @@ type PropsType = {
 };
 
 export default function PrivateRoute(props: PropsType) {
-  const { authToken } = useCustomSelector((state) => state.appointmentReducer);
+  const authTokenSelector = (state: RootState) => {
+    return state.appointmentReducer.authToken;
+  };
+  const authToken = useSelector(authTokenSelector);
+
   const { children } = props;
 
   if (!authToken) return <Redirect to="/" />;

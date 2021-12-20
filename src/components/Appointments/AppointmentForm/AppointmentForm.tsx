@@ -1,16 +1,18 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputMask from "react-input-mask";
-import { setError } from "../../../redux/reducers/AppointmentSlice";
+import {
+  getCurrentAppointment,
+  getDepartments,
+  updateAppointment,
+} from "../../../redux/reducers/AppointmentSlice";
+import { RootState } from "../../../redux/store";
 
 import * as Yup from "yup";
-import {
-  getCurrentAppointmentApi,
-  getDepartmentsApi,
-  updateAppointmentApi,
-} from "../../../api";
 import Loading from "../../Loading";
+
+import { AppointmentType } from "../../../types";
 
 import { Form, Formik } from "formik";
 import { DatePicker, TimePicker, Input, AutoComplete } from "formik-antd";
@@ -18,13 +20,13 @@ import { Button } from "antd";
 import { Option } from "antd/lib/mentions";
 import styles from "./AppointmentForm.module.scss";
 import classNames from "classnames";
-import { AppointmentType } from "../../../types";
+import dayjs from "dayjs";
 
 const phoneClassNames = classNames(styles.phoneNumber, styles.input);
 
 const phoneRegExp = /^\d{10}$/;
 
-const Validation = Yup.object().shape({
+const validation = Yup.object().shape({
   firstName: Yup.string().max(100, "Too long!").required("Required"),
   secondName: Yup.string().max(100, "Too long!").required("Required"),
   date: Yup.mixed().required("Required"),
@@ -42,79 +44,70 @@ type PropsType = {
 
 export default function AppointemntForm(props: PropsType) {
   const [isLoading, setLoading] = useState(false);
-
   const [currentAppointment, setCurrentAppointment] =
     useState<AppointmentType>();
-  const [departments, setDepartments] = useState([]);
+
+  const departmentsSelector = (state: RootState) => {
+    return state.appointmentReducer.departments;
+  };
+  const departments = useSelector(departmentsSelector);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams<{ id: string }>();
 
-  const onCancelClick = () => {
-    currentAppointment ? history.goBack() : props.setModalVisible(false);
-  };
-
-  // type ValuesType = {
-  //   firstName: string;
-  //   secondName: string;
-  //   date: string | number;
-  //   number: string;
-  //   department: string;
-  //   notes: string;
-  // };
-
-  const handleUpdateSubmit = async (values: any) => {
-    //cannot remove any
-    try {
-      await updateAppointmentApi({
-        id: currentAppointment?.id as number,
-        firstName: values.firstName.trim(),
-        secondName: values.secondName.trim(),
-        date: new Date(values.date).valueOf(),
-        number: values.number,
-        department: values.department,
-        status: currentAppointment?.status as string,
-        notes: values.notes.trim(),
-      });
-      alert("Updated successfully!");
-    } catch (error: any) {
-      alert("Something went wrong(");
-      dispatch(setError(error.message));
-    }
-  };
-
   useEffect(() => {
-    const getDepartments = async () => {
+    const getData = async () => {
       setLoading(true);
       try {
-        const { data } = await getDepartmentsApi();
-        setDepartments(data);
-      } catch (error: any) {
-        dispatch(setError(error.message));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const getCurrentAppointment = async () => {
-      setLoading(true);
-      try {
-        const { data } = await getCurrentAppointmentApi(+params.id);
-        setCurrentAppointment(data);
-      } catch (error: any) {
-        dispatch(setError(error.message));
+        const action: any = await dispatch(getCurrentAppointment(+params.id));
+        setCurrentAppointment(action.payload);
+      } catch {
+        alert("Something went wrong(");
       } finally {
         setLoading(false);
       }
     };
 
     if (!props.handleAddSubmit) {
-      getCurrentAppointment();
+      getData();
     }
 
-    getDepartments();
+    dispatch(getDepartments());
   }, [dispatch, params.id, props.handleAddSubmit]);
+
+  const onCancelClick = () => {
+    currentAppointment ? history.goBack() : props.setModalVisible(false);
+  };
+
+  const handleUpdateSubmit = async (values: any) => {
+    setLoading(true);
+    try {
+      await dispatch(
+        updateAppointment({
+          id: currentAppointment?.id as number,
+          firstName: values.firstName.trim(),
+          secondName: values.secondName.trim(),
+          date: dayjs(values.date).valueOf(),
+          number: values.number,
+          department: values.department,
+          status: currentAppointment?.status as string,
+          notes: values.notes.trim(),
+        })
+      );
+      alert("Updated successfully!");
+    } catch {
+      alert("Something went wrong(");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = (values: any) => {
+    props.handleAddSubmit
+      ? props.handleAddSubmit(values)
+      : handleUpdateSubmit(values);
+  };
 
   return (
     <>
@@ -137,16 +130,9 @@ export default function AppointemntForm(props: PropsType) {
                 number: currentAppointment?.number,
                 notes: currentAppointment?.notes,
               }}
-              validationSchema={Validation}
-              onSubmit={(values: any, { setSubmitting }) => {
-                //how to remove any
-                setSubmitting(false);
-                props.handleAddSubmit
-                  ? props.handleAddSubmit(values)
-                  : handleUpdateSubmit(values);
-                setSubmitting(true);
-              }}
-              validateOnBlur={true}
+              validationSchema={validation}
+              onSubmit={onSubmit}
+              validateOnBlur
             >
               {({ isSubmitting, errors, touched, setFieldValue }) => (
                 <Form>

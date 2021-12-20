@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useCustomSelector } from "../../redux/store";
-import { setError, setStatuses } from "../../redux/reducers/AppointmentSlice";
-
-import { getStatusesApi } from "../../api";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { getStatuses } from "../../redux/reducers/AppointmentSlice";
 
 import { Select } from "antd";
 import styles from "./StatusesSelect.module.scss";
+import Loading from "../Loading";
 
 const { Option } = Select;
 
@@ -16,38 +15,49 @@ type PropsType = {
 };
 
 function StatusesSelect(props: PropsType) {
-  const { statuses } = useCustomSelector((state) => state.appointmentReducer);
+  const statusesSelector = (state: RootState) => {
+    return state.appointmentReducer.statuses;
+  };
+  const statuses = useSelector(statusesSelector);
+
+  const [isLoading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getStatuses = async () => {
-      try {
-        const { data } = await getStatusesApi();
-        dispatch(setStatuses(data));
-      } catch (error: any) {
-        dispatch(setError(error.message));
-      }
+    const getData = async () => {
+      setLoading(true);
+      await dispatch(getStatuses());
+      setLoading(false);
     };
 
-    getStatuses();
+    getData();
   }, [dispatch]);
 
+  enum StatusesSelectEnum {
+    All = "All",
+  }
+
   return (
-    <Select
-      defaultValue={props.currentStatus || "All"}
-      className={styles.statuses}
-      bordered
-      onChange={props.handleChange}
-    >
-      {statuses.map((status, index) => {
-        return (
-          <Option key={index} value={status}>
-            {status}
-          </Option>
-        );
-      })}
-    </Select>
+    <>
+      {isLoading && <Loading />}
+      {!isLoading && (
+        <Select
+          defaultValue={props.currentStatus || StatusesSelectEnum.All}
+          className={styles.statuses}
+          bordered
+          onChange={props.handleChange}
+        >
+          {statuses.map((status, index) => {
+            return (
+              <Option key={index} value={status}>
+                {status}
+              </Option>
+            );
+          })}
+        </Select>
+      )}
+    </>
   );
 }
 
