@@ -33,7 +33,7 @@ export default function AppointmentDetailsPage() {
         const action: any = await dispatch(getCurrentAppointment(+params.id));
         setCurrentAppointment({
           ...action.payload,
-          date: dayjs(action.payload.date).format("DD.MM.YYYY hh:mm:ss"),
+          date: dayjs(action.payload.date).format("DD.MM.YYYY HH:MM:ss"),
         });
         setConvertedPhoneNumber(convertPhoneNumber(action.payload.number));
       } catch {
